@@ -1,0 +1,94 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block body %}
+		<main class="content">
+			<div class="single">
+				<section class="links">
+					{% if object.flim%}
+						<video id="example" poster = "{{object.banner.url}}">
+							<source src="{{object.flim.url}}" type="video/mp4">
+							<track kind="captions" label="Vietsub" srclang="vn" src="{{object.subtitle.url}}">
+						</video> 
+					{%else%}
+						<h3>Comming Soon</h3>
+					{%endif%}
+				</section>
+				<section class="movie">
+					<img src="{{object.image.url}}" style="width:280px;height:400px; object-fit: contain;">
+					<ul>
+						<li>{{object}}</li>
+						<li>{{object.description}}</li>
+						<li><a href="genre.html">{{object.category}}</a></li>
+						<li><a href="">{{object.cast}}</a></li>
+						<li>{{object.views_count}} Lượt Xem</li>
+					</ul>
+				</section>
+				<section class="trailer">
+					<h3>Trailer</h3>
+					<div class="trailer_frame">
+						<iframe width="10000" height="9000" src="{{object.movie_trailer}}" frameborder="0" allowfullscreen></iframe>
+					</div>
+				</section>
+
+				<section class="movies">
+					<h2 class="section-heading">Phim Cùng Thể Loại</h2>
+					<div class="movies-grid">
+						{%for movie in related_movies %}
+							<div class="movie-card">
+								<div class="card-head">
+								<img src="{{movie.image.url}}" alt="" class="card-img">
+								<a href="{% url 'movies:movie_detail' movie.slug %}">
+								
+								<div class="card-overlay">
+					
+									<div class="bookmark">
+									<ion-icon name="bookmark-outline"></ion-icon>
+									</div>
+									<div class="play">
+									<ion-icon name="play-circle-outline"></ion-icon>
+									</div>
+								</a>
+								</div>
+								</div>
+					
+								<div class="card-body">
+								<h3 class="card-title">{{movie.title}}</h3>
+					
+								<div class="card-info">
+									<span class="genre">{{movie.category}}</span>
+									<span class="year">2022</span>
+								</div>
+								</div>
+							</div>
+						{% empty %}
+							<h3>Không có phim nào trong thể loại này</h3>
+						{% endfor %}
+					</div>
+				</section> 
+
+				{% comment %} <section class="related">
+					<h3>Phim Cùng Thể Loại</h3>
+					{% for movie in related_movies %}
+						<div class="">
+							<a href="{% url 'movies:movie_detail' movie.slug %}"><img src="{{movie.image.url}}"></a>
+							<a href="{% url 'movies:movie_detail' movie.slug %}"><span class="relatedname">{{movie.title}}</span></a>
+						</div>
+					{% endfor %}
+
+				</section>  {% endcomment %}
+			</div>
+		</main>
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+					var demo1 = new Moovie({
+					  selector: "#example",
+					  dimensions: {
+						   width: "100%"
+					  },
+					  icons : {
+						path: "{% static 'img/' %}"
+					  }
+					});
+			});
+		  </script>
+{% endblock body %}

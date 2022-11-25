@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<main >
+        <div class="homeslider">
+            <div class="swiper-container">
+
+                <div class="swiper-wrapper">
+
+                    {% for movie in slider_movie %}
+                        
+                        <div class="swiper-slide">
+                            {% if movie.banner %}
+                                <img src="{{movie.banner.url}} ">
+                            {% endif %}
+                            
+                            <div class="caption">
+                                <div class="captioninside">
+                                    <h3>{{movie.title}}</h3>
+                                    <p>{{movie.description}}</p>
+                                    <a href="{% url 'movies:movie_detail' movie.slug %}" class="playbutton">Play</a>
+                                </div>
+                            </div>
+                        </div>
+            
+                    {% endfor %}
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div> 
+			<section class="category" id="id">
+				<h2 class="section-heading">Thể Loại</h2>
+		
+				<div class="category-grid">
+		
+				<div class="category-card">
+					<img src="{% static 'img/action.jpg' %}" alt="" class="card-img">
+					<div class="name"><a href="{% url 'movies:movie_category' 'Hành Động' %}">Hành Động</a></div>
+				</div>
+				<div class="category-card">
+					<img src="{% static 'img/sci-fi.jpg' %}" alt="" class="card-img">
+					<div class="name"><a href="{% url 'movies:movie_category' 'Viễn Tưởng' %}">Viễn Tưởng</a></div>
+				</div>
+				<div class="category-card">
+					<img src="{% static 'img/crime.jpg' %}" alt="" class="card-img">
+					<div class="name"><a href="{% url 'movies:movie_category' 'Trinh Thám' %}">Trinh Thám</a></div>
+				</div>
+				<div class="category-card">
+					<img src="{% static 'img/drama.jpg' %}" alt="" class="card-img">
+					<div class="name"><a href="{% url 'movies:movie_category' 'DRAMA' %}">Drama</a></div>
+				</div>
+			</section>
+
+			<section class="movies">
+				<h2 class="section-heading">Gần Đây</h2>
+				<div class="movies-grid">
+					{% for movie in recently_added %} 
+						<div class="movie-card">
+							<div class="card-head">
+							<img src="{{movie.image.url}}" alt="" class="card-img">
+							<a href="{% url 'movies:movie_detail' movie.slug %}">
+							
+							<div class="card-overlay">
+				
+								<div class="bookmark">
+								<ion-icon name="bookmark-outline"></ion-icon>
+								</div>
+							
+				
+								<div class="rating">
+								<ion-icon name="star-outline"></ion-icon>
+								<span>{{movie.imbd}}</span>
+								</div>
+				
+								<div class="play">
+								<ion-icon name="play-circle-outline"></ion-icon>
+								</div>
+							</a>
+							</div>
+							</div>
+				
+							<div class="card-body">
+							<h3 class="card-title">{{movie.title}}</h3>
+				
+							<div class="card-info">
+								<span class="genre">{{movie.category}}</span>
+								<span class="year">{{movie.get_year}}</span>
+							</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</section>
+
+			<section class="movies">
+				<h2 class="section-heading">Xem Nhiều Nhất</h2>
+				<div class="movies-grid">
+					{% for movie in most_watched %} 
+						<div class="movie-card">
+							<div class="card-head">
+							<img src="{{movie.image.url}}" alt="" class="card-img">
+							<a href="{% url 'movies:movie_detail' movie.slug %}">
+				
+							<div class="card-overlay">
+				
+								<div class="bookmark">
+								<ion-icon name="bookmark-outline"></ion-icon>
+								</div>
+				
+								<div class="rating">
+								<ion-icon name="star-outline"></ion-icon>
+								<span>{{movie.imbd}}</span>
+								</div>
+				
+								<div class="play">
+								<ion-icon name="play-circle-outline"></ion-icon>
+								</div>
+							</a>	
+							</div>
+							</div>
+				
+							<div class="card-body">
+							<h3 class="card-title">{{movie.title}}</h3>
+				
+							<div class="card-info">
+								<span class="genre">{{movie.category}}</span>
+								<span class="year">{{movie.get_year}}</span>
+							</div>
+							</div>
+				
+						</div>
+					{% endfor %}
+				</div>
+			</section>
+			
+			<section class="movies">
+				<h2 class="section-heading">Được Đánh Giá Cao</h2>
+				<div class="movies-grid">
+					{% for movie in top_rated %} 
+						<div class="movie-card">
+							<div class="card-head">
+							<img src="{{movie.image.url}}" alt="" class="card-img">
+							<a href="{% url 'movies:movie_detail' movie.slug %}">
+				
+							<div class="card-overlay">
+				
+								<div class="bookmark">
+								<ion-icon name="bookmark-outline"></ion-icon>
+								</div>
+				
+								<div class="rating">
+								<ion-icon name="star-outline"></ion-icon>
+								<span>{{movie.imbd}}</span>
+								</div>
+				
+								<div class="play">
+								<ion-icon name="play-circle-outline"></ion-icon>
+								</div>
+							</a>	
+							</div>
+							</div>
+				
+							<div class="card-body">
+							<h3 class="card-title">{{movie.title}}</h3>
+				
+							<div class="card-info">
+								<span class="genre">{{movie.category}}</span>
+								<span class="year">{{movie.get_year}}</span>
+							</div>
+							</div>
+				
+						</div>
+					{% endfor %}
+				</div>
+			</section>
+			{% comment %} <section class="panel">
+				<h2>Gần Đây</h2>
+				<div class="recentslider">
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+                            {% for movie in recently_added %} 
+							    <div class="swiper-slide"><a href="{% url 'movies:movie_detail' movie.slug %}"><img src="{{movie.image.url}}"><h3 class="hometitle">{{movie.title}}</h3></a></div>
+                            {% endfor %}
+							<div class="swiper-slide"><a href="mostwatched.html"><img src="{% static 'img/others.png' %}"></a></div> 
+						</div>
+						<div class="nextdirection recent-next"><img src="{% static 'img/right-arrow.svg' %}"> </div>
+						<div class="leftdirection recent-prev"><img src="{% static 'img/left-arrow.svg' %}"> </div>
+					</div>
+				</div>
+			</section> 
+			<section class="panel">
+				<h2>Xem Nhiều Nhất</h2>
+				<div class="mostslider">
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+                            {% for movie in most_watched %} 
+							    <div class="swiper-slide"><a href="{% url 'movies:movie_detail' movie.slug %}"><img src="{{movie.image.url}}"><h3 class="hometitle">{{movie.title}}</h3></a></div>
+                            {% endfor %}
+							<div class="swiper-slide"><a href="mostwatched.html"><img src="{% static 'img/others.png' %}"></a></div>
+						</div>
+						<div class="nextdirection most-next"><img src="{% static 'img/right-arrow.svg' %}"> </div>
+						<div class="leftdirection most-prev"><img src="{% static 'img/left-arrow.svg' %}"> </div>
+						<!-- Add Pagination -->
+					</div>
+				</div>
+			</section> 
+
+			<section class="panel">
+				<h2>Đánh Giá Cao</h2>
+				<div class="topslider">
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+                            
+                            {% for movie in top_rated %}  
+							    <div class="swiper-slide"><a href="{% url 'movies:movie_detail' movie.slug %}"><img src="{{movie.image.url}}"><h3 class="hometitle">{{movie.title}}</h3></a></div>
+                            {% endfor %}
+							<div class="swiper-slide"><a href="mostwatched.html"><img src="{% static 'img/others.png' %}"></a></div>
+						</div>
+						<div class="nextdirection top-next"><img src="{% static 'img/right-arrow.svg' %}"> </div>
+						<div class="leftdirection top-prev"><img src="{% static 'img/left-arrow.svg' %}"> </div>
+						<!-- Add Pagination -->
+					</div>
+				</div>
+			</section>  {% endcomment %}
+			
+</main> 
+{% endblock body %}
